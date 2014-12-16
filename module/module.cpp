@@ -14,6 +14,7 @@
 #include "amxxmodule.h"
 #include "module.h"
 #include "CDetour/detours.h"
+#include <am-string.h>
 
 PlayerData Players[32];
 
@@ -94,62 +95,64 @@ DETOUR_DECLCONV_STATIC6(OnNewSendto, size_t, PASCAL, int, socket, const void*, m
 				(long)		Player Score
 				(float)		Player Time
 				--
-				*/
+			*/
 
-			unsigned char* newMessage = (unsigned char*)malloc(length);
-			memcpy(newMessage, message, length);
+			ke::AString newMessage((const char*)origMessage, length);
 
-			size_t len = length - 5;
-			const unsigned char* messageWithoutHeader = (const unsigned char*)message + 5;
+			size_t currentLength = length - 5;
+			const unsigned char* messageWithoutHeader = origMessage + 5;
 
 			int		playerCount;
 			char	playerName[32];
-			size_t	offset;
 
-			// Get player count
-			playerCount = *messageWithoutHeader++;
+			playerCount = *messageWithoutHeader++; // Get player count
 
-			if (--len == 0)
-				goto skip;
+			if (--currentLength == 0) 
+			{ 
+				goto skip; 
+			}
 
-			// Parse player slots
-			for (int i = 0; i < playerCount; i++)
+			for (int i = 0; i < playerCount; ++i)  // Parse player slots
 			{
-				// Skip player number
-				messageWithoutHeader++;
+				messageWithoutHeader++;            // Skip player number
 
-				if (--len == 0)
-					break;
+				if (--currentLength == 0) 
+				{	
+					break; 
+				}
 
 				memset(playerName, 0, sizeof(playerName));
 
-				// Detect bot by name
-				if (!messageGetString(messageWithoutHeader, len, playerName, sizeof(playerName)))
-					break;
+				if (!messageGetString(messageWithoutHeader, currentLength, playerName, sizeof(playerName)))	 // Detect bot by name
+				{ 
+					break; 
+				} 
 
-				// Skip score
-				if (len <= 4)
-					break;
+				if (currentLength <= 4)	 // Skip score
+				{ 
+					break; 
+				}  
 
 				messageWithoutHeader += 4;
-				len -= 4;
+				currentLength -= 4;
 
-				// Check th at there is enough bytes left
-				if (len < 4)
-					break;
+				if (currentLength < 4)  // Check th at there is enough bytes left 
+				{ 
+					break; 
+				}   
 
-				offset = (size_t)messageWithoutHeader - (size_t)message;
-
-				botReplaceConnectionTime(playerName, (float*)&newMessage[offset]);
+				botReplaceConnectionTime(playerName, (float*)&newMessage.chars()[(size_t)messageWithoutHeader - (size_t)message]);
 
 				messageWithoutHeader+=4;
-				len-=4;
+				currentLength -= 4;
 
-				if (len == 0)
+				if (currentLength == 0)
+				{
 					break;
+				}
 			}
 
-			return DETOUR_STATIC_CALL(OnNewSendto)(socket, newMessage, length, flags, dest_addr, dest_len);
+			return DETOUR_STATIC_CALL(OnNewSendto)(socket, newMessage.chars(), length, flags, dest_addr, dest_len);
 		}
 	}
 
@@ -245,29 +248,37 @@ bool isBot(edict_t* pEntity)
 	return false;
 }
 
-bool messageGetString(const unsigned char* &msg, size_t &len, char* name, int nlen)
+bool messageGetString(const unsigned char* &buffer, size_t &len, char* name, int nlen)
 {
 	int i = 0;
 
-	while (*msg != 0)
+	while (*buffer != 0)
 	{
 		if (i < nlen)
-			name[i++]= *msg;
+		{
+			name[i++]= *buffer;
+		}
 
-		msg++;
+		++buffer;
 
 		if (--len == 0)
+		{
 			return false;
+		}
 	}
 
 	if (i < nlen)
+	{
 		name[i] = 0;
+	}
 
-	msg++;
+	++buffer;
 
 	if (--len == 0)
+	{
 		return false;
-
+	}
+	
 	return true;
 }
 
