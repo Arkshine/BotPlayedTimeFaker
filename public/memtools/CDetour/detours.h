@@ -68,6 +68,10 @@ ret name(p1type p1name, p2type p2name, p3type p3name)
 ret (*name##_Actual)(p1type, p2type, p3type, p4type) = NULL; \
 ret name(p1type p1name, p2type p2name, p3type p3name, p4type p4name)
 
+#define DETOUR_DECLCONV_STATIC6(name, ret, conv, p1type, p1name, p2type, p2name, p3type, p3name, p4type, p4name, p5type, p5name, p6type, p6name) \
+ret (conv *name##_Actual)(p1type, p2type, p3type, p4type, p5type, p6type) = NULL; \
+ret conv name(p1type p1name, p2type p2name, p3type p3name, p4type p4name, p5type p5name, p6type p6name)
+
 #define DETOUR_DECL_MEMBER0(name, ret) \
 class name##Class \
 { \

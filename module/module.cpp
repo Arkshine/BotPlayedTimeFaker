@@ -12,16 +12,12 @@
 //
 
 #include "amxxmodule.h"
-#include "chooker.h"
 #include "module.h"
-
-CHooker		HookerClass;
-CHooker*	Hooker = &HookerClass;
+#include "CDetour/detours.h"
 
 PlayerData Players[32];
 
-Func_Sendto SendtoOriginal = NULL;
-CFunc* SendtoHook = NULL;
+CDetour* SendtoDetour;
 
 void OnMetaAttach()
 {
@@ -75,10 +71,10 @@ void OnSetClientKeyValue(int clientIndex, char* infobuffer, const char* key, con
 
 void OnMetaDetach(void)
 {
-	SendtoHook->Restore();
+	SendtoDetour->Destroy();
 }
 
-size_t PASCAL OnNewSendto(int socket, const void* message, size_t length, int flags, const struct sockaddr* dest_addr, socklen_t dest_len)
+DETOUR_DECLCONV_STATIC6(OnNewSendto, size_t, PASCAL, int, socket, const void*, message, size_t, length, int, flags, const struct sockaddr*, dest_addr, socklen_t, dest_len)
 {
 	const unsigned char* origMessage = (unsigned char*)message;
 
@@ -153,25 +149,13 @@ size_t PASCAL OnNewSendto(int socket, const void* message, size_t length, int fl
 					break;
 			}
 
-			if (SendtoHook->Restore())
-			{
-				ret = SendtoOriginal(socket, newMessage, length, flags, dest_addr, dest_len);
-				SendtoHook->Patch();
-			}
-
-			return ret;
+			return DETOUR_STATIC_CALL(OnNewSendto)(socket, newMessage, length, flags, dest_addr, dest_len);
 		}
 	}
 
 skip:
 
-	if (SendtoHook->Restore())
-	{
-		ret = SendtoOriginal(socket, message, length, flags, dest_addr, dest_len);
-		SendtoHook->Patch();
-	}
-
-	return ret;
+	return DETOUR_STATIC_CALL(OnNewSendto)(socket, message, length, flags, dest_addr, dest_len);
 }
 
 void botReplaceConnectionTime(const char* name, float* timeslot)
@@ -206,25 +190,29 @@ bool hookSendto(void)
 {
 #ifdef WIN32
 
-	SendtoOriginal = (Func_Sendto)GetProcAddress(GetModuleHandle("wsock32.dll"), "sendto");
+	void* address = (void*)GetProcAddress(GetModuleHandle("wsock32.dll"), "sendto");
 
 #else
 
 	// metamod-p parses elf structures, we find function easier & better way
-	void * sym_ptr = ( void* )&sendto;
+	void* address = (void*)&sendto;
 
-	while( *( unsigned short* )sym_ptr == 0x25ff )
+	while (*(unsigned short*)sym_ptr == 0x25ff)
 	{
-		sym_ptr = **( void*** )( ( char* )sym_ptr + 2 );
+		address = **(void***)((char*)sym_ptr + 2);
 	}
-
-	SendtoOriginal = ( Func_Sendto )sym_ptr;
 
 #endif
 
-	SendtoHook = Hooker->CreateHook(SendtoOriginal, (void*)OnNewSendto, TRUE);
+	SendtoDetour = DETOUR_CREATE_STATIC_FIXED(OnNewSendto, address);
 
-	return SendtoHook ? true : false;
+	if (SendtoDetour)
+	{
+		SendtoDetour->EnableDetour();
+		return true;
+	}
+
+	return false;
 }
 
 void setBotDatas(int index, const char* name)
