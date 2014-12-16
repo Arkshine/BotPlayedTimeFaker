@@ -1,6 +1,6 @@
 #include "amxxmodule.h"
 #include "chooker.h"
-#include "main.h"
+#include "module.h"
 
 CHooker		HookerClass;
 CHooker*	Hooker = &HookerClass;
