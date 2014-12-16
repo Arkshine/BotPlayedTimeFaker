@@ -14,7 +14,7 @@ MM_ROOT = ../metamod/metamod
 
 PROJECT = bot_played_time_faker
 
-OBJECTS = sdk/amxxmodule.cpp main.cpp
+OBJECTS = public/sdk/amxxmodule.cpp module/main.cpp
 
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###
