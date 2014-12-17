@@ -134,9 +134,9 @@ bool CreateSendtoHook(void)
 		// metamod-p parses elf structures, we find function easier & better way
 		void* address = (void*)&sendto;
 
-		while (*(unsigned short*)sym_ptr == 0x25ff)
+		while (*(unsigned short*)address == 0x25ff)
 		{
-			address = **(void***)((char*)sym_ptr + 2);
+			address = **(void***)((char*)address + 2);
 		}
 
 	#endif
