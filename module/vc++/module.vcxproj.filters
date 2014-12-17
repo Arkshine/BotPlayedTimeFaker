@@ -24,6 +24,9 @@
     <Filter Include="Memtools\CDetour\asm">
       <UniqueIdentifier>{a0a6ee55-8913-4c72-8df8-7554e1d8e2a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource File">
+      <UniqueIdentifier>{729662b5-de3c-4831-9bd3-6a2cca65d74d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\public\sdk\amxxmodule.cpp">
@@ -82,5 +85,13 @@
     <ClInclude Include="..\..\public\sdk\amxxmodule.h">
       <Filter>Module SDK\SDK Base</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\version.rc">
+      <Filter>Resource File</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

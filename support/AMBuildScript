@@ -342,4 +342,7 @@ binary.sources = [
   '../public/memtools/CDetour/asm/asm.c'
 ]
 
+if builder.target_platform == 'windows':
+  binary.sources += ['../module/version.rc']
+  
 builder.Add(binary)
