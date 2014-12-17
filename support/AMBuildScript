@@ -330,7 +330,7 @@ if Module.use_auto_versioning():
     { 'Module': Module }
   )
 
-binary = Module.MetaModule(builder, 'bot_played_time_faker')
+binary = Module.MetaPlugin(builder, 'bot_played_time_faker')
 
 binary.sources = [
   '../public/sdk/amxxmodule.cpp',
