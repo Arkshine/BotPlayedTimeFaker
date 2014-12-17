@@ -11,9 +11,14 @@
 // Bot Played Time Faker Module
 //
 
-#ifndef MODULE_H
-#define MODULE_H
+#ifndef HOOK_H
+#define HOOK_H
 
-#include "amxxmodule.h"
+#include "CDetour/detours.h"
 
-#endif // MODULE_H
+extern CDetour* SendtoDetour;
+
+bool CreateSendtoHook(void);
+bool MessageGetString(const unsigned char* &msg, size_t &len, char* name, int nlen);
+
+#endif // HOOK_H

@@ -41,11 +41,17 @@
     <ClCompile Include="..\..\public\memtools\MemoryUtils.cpp">
       <Filter>Memtools</Filter>
     </ClCompile>
+    <ClCompile Include="..\hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\public\sdk\amxxmodule.h">
-      <Filter>Module SDK\SDK Base</Filter>
-    </ClInclude>
     <ClInclude Include="..\moduleconfig.h">
       <Filter>Module SDK</Filter>
     </ClInclude>
@@ -63,6 +69,18 @@
     </ClInclude>
     <ClInclude Include="..\..\public\memtools\MemoryUtils.h">
       <Filter>Memtools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\hook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\public\sdk\amxxmodule.h">
+      <Filter>Module SDK\SDK Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

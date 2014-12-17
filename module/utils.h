@@ -1,5 +1,3 @@
-// vim: set ts=4 sw=4 tw=99 noet:
-//
 // AMX Mod X, based on AMX Mod by Aleksander Naszko ("OLO").
 // Copyright (C) The AMX Mod X Development Team.
 //
@@ -11,9 +9,9 @@
 // Bot Played Time Faker Module
 //
 
-#ifndef MODULE_H
-#define MODULE_H
+#ifndef UTILS_H
+#define UTILS_H
 
-#include "amxxmodule.h"
+float GetTimeInSeconds(void);
 
-#endif // MODULE_H
+#endif // UTILS_H

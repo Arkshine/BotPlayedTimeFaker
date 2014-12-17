@@ -43,6 +43,11 @@
 		#include <malloc.h>
 	#endif
 #elif defined(WIN32)
+	#define WIN32_LEAN_AND_MEAN
+	#define NOWINRES
+	#define NOSERVICE
+	#define NOMCX
+	#define NOIME
 	#include <windows.h>
 #endif
 

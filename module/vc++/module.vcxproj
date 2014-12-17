@@ -146,8 +146,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\bot.cpp" />
+    <ClCompile Include="..\hook.cpp" />
     <ClCompile Include="..\module.cpp" />
     <ClCompile Include="..\..\public\sdk\amxxmodule.cpp" />
+    <ClCompile Include="..\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\public\memtools\CDetour\asm\asm.h" />
@@ -157,9 +160,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\bot.h" />
+    <ClInclude Include="..\hook.h" />
     <ClInclude Include="..\module.h" />
     <ClInclude Include="..\moduleconfig.h" />
-    <ClInclude Include="..\public\sdk\amxxmodule.h" />
+    <ClInclude Include="..\..\public\sdk\amxxmodule.h" />
+    <ClInclude Include="..\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
