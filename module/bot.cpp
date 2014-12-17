@@ -14,19 +14,19 @@
 #include "bot.h"
 #include "utils.h"
 
-Bot BotsList[MaxClients + 1];
+CBot Players[MaxClients + 1];
 
-Bot::Bot(void)
+CBot::CBot(void)
 {
 	clear();
 }
 
-Bot::~Bot(void)
+CBot::~CBot(void)
 {
 	
 }
 
-void Bot::clear(void)
+void CBot::clear(void)
 {
 	m_isBot       = false;
 	m_inGame      = false;
@@ -35,12 +35,12 @@ void Bot::clear(void)
 	m_name[0]     = '\0';
 }
 
-bool Bot::isInGame(void)
+bool CBot::isInGame(void)
 {
 	return m_inGame;
 }
 
-void Bot::setData(const char* name)
+void CBot::setData(const char* name)
 {
 	memcpy(m_name, name, strlen(name) + 1);
 
@@ -51,7 +51,7 @@ void Bot::setData(const char* name)
 }
 
 
-bool Bot::isBot(edict_t* pEntity)
+bool CBot::isBot(edict_t* pEntity)
 {
 	if ((pEntity->v.flags & FL_FAKECLIENT) == FL_FAKECLIENT)
 	{
@@ -69,11 +69,11 @@ bool Bot::isBot(edict_t* pEntity)
 }
 
 
-Bot* Bot::getBot(const char* name)
+CBot* CBot::getBot(const char* name)
 {
 	for (size_t i = 1; i <= MaxClients; ++i)
 	{
-		Bot* bot = &BotsList[i];
+		CBot* bot = &Players[i];
 
 		if (bot->m_isBot && !strcmp(bot->m_name, name))
 		{
@@ -84,9 +84,9 @@ Bot* Bot::getBot(const char* name)
 	return NULL;
 }
 
-void Bot::replaceConnectionTime(const char* name, float* timeslot)
+void CBot::replaceConnectionTime(const char* name, float* timeslot)
 {
-	Bot* bot = getBot(name);
+	CBot* bot = getBot(name);
 
 	if (bot)
 	{

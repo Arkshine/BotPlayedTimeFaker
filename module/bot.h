@@ -18,18 +18,18 @@
 
 const int MaxClients = 32;
 
-class Bot
+class CBot
 {
 	public:
 
-		Bot(void);
-		~Bot(void);
+		CBot(void);
+		~CBot(void);
 
 		void clear(void);
 		bool isInGame(void);
 		void setData(const char* name);
 
-		static Bot* getBot(const char* name);
+		static CBot* getBot(const char* name);
 		static bool isBot(edict_t* pEntity);
 		static void replaceConnectionTime(const char* name, float* timeslot);
 
@@ -42,6 +42,6 @@ class Bot
 		char	m_name[32];
 };
 
-extern Bot BotsList[];
+extern CBot Players[];
 
 #endif // BOT_H

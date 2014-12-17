@@ -30,21 +30,21 @@ void OnMetaDetach(void)
 
 BOOL OnClientConnect(edict_t* pEntity, const char* pszName, const char *pszAddress, char szRejectReason[128])
 {
-	BotsList[ENTINDEX(pEntity)].clear();
+	Players[ENTINDEX(pEntity)].clear();
 
 	RETURN_META_VALUE(MRES_IGNORED, FALSE);
 }
 
 void OnClientDisconnect(edict_t* pEntity)
 {
-	BotsList[ENTINDEX(pEntity)].clear();
+	Players[ENTINDEX(pEntity)].clear();
 
 	RETURN_META(MRES_IGNORED);
 }
 
 void OnClientUserInfoChangedPost(edict_t* pEntity, char* infobuffer)
 {
-	Bot* player = &BotsList[ENTINDEX(pEntity)];
+	CBot* player = &Players[ENTINDEX(pEntity)];
 
 	if (!player->isInGame() && player->isBot(pEntity))
 	{
@@ -56,7 +56,7 @@ void OnClientUserInfoChangedPost(edict_t* pEntity, char* infobuffer)
 
 void OnSetClientKeyValue(int clientIndex, char* infobuffer, const char* key, const char* value)
 {
-	Bot* player = &BotsList[clientIndex];
+	CBot* player = &Players[clientIndex];
 
 	if (*value == '1' && !player->isInGame() && !strcmp(key, "*bot"))
 	{

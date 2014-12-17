@@ -15,7 +15,7 @@
 #include "bot.h"
 #include <am-string.h>
 
-#ifdef _WIN32
+#if defined(WIN32)
 	#include <sys/types.h>
 	#include <string.h>
 
@@ -98,7 +98,7 @@ DETOUR_DECLCONV_STATIC6(OnNewSendto, size_t, PASCAL, int, socket, const void*, m
 					break;
 				}
 
-				Bot::replaceConnectionTime(playerName, (float*)&newMessage.chars()[(size_t)messageWithoutHeader - (size_t)message]);
+				CBot::replaceConnectionTime(playerName, (float*)&newMessage.chars()[(size_t)messageWithoutHeader - (size_t)message]);
 
 				messageWithoutHeader+=4;
 				currentLength -= 4;
