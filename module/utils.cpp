@@ -10,6 +10,7 @@
 //
 
 #include "utils.h"
+#include <amxxmodule.h>
 
 #if defined(WIN32)
 	#define WIN32_LEAN_AND_MEAN
