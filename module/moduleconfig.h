@@ -14,6 +14,8 @@
 #ifndef __MODULECONFIG_H__
 #define __MODULECONFIG_H__
 
+#include <module_version.h>
+
 /** Module info
  * -The logtag is the tag that the module's log messages will be
  *   prepended with.
@@ -25,15 +27,15 @@
  * -For both library and library class, you can use a comma
  *   to add multiple entries.
  */
-#define MODULE_NAME "Bot Player Time Faker"
-#define MODULE_VERSION "1.1"
-#define MODULE_AUTHOR "Arkshine"
-#define MODULE_URL ""
-#define MODULE_LOGTAG "BOT_PLAYER_TIME_FAKER"
-#define MODULE_LIBRARY "bot_player_time_faker"
+#define MODULE_NAME     "Bot Player Time Faker"
+#define MODULE_VERSION  EXTENSION_VERSION
+#define MODULE_AUTHOR   "Arkshine"
+#define MODULE_URL      "https://forums.alliedmods.net/showthread.php?t=211588"
+#define MODULE_LOGTAG   "BOT_PLAYER_TIME_FAKER"
+#define MODULE_LIBRARY  "bot_player_time_faker"
 #define MODULE_LIBCLASS ""
 // If you want the module not to be reloaded on mapchange, remove / comment out the next line
-#define MODULE_RELOAD_ON_MAPCHANGE
+// #define MODULE_RELOAD_ON_MAPCHANGE
 
 #ifdef __DATE__
 #define MODULE_DATE __DATE__

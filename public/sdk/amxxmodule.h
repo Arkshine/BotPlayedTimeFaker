@@ -17,7 +17,7 @@
 #define __AMXXMODULE_H__
 
 // config
-#include "moduleconfig.h"
+#include <moduleconfig.h>
 
 #include <stddef.h> // size_t
 // metamod include files
